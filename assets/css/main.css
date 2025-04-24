@@ -1,0 +1,14 @@
+
+.priority-icon {
+  max-height: 15px;
+  height: 100%;
+}
+
+#tasks-container .fa-check:hover {
+  color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
+}
+
+#task-form [name="priority"] {
+  width: 100%;
+  max-width: 115px;
+}
