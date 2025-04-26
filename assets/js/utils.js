@@ -1,7 +1,7 @@
 
 function today() {
   const today = new Date();
-  today.setHours(24, 0, 0, 0);
+  today.setUTCHours(0, 0, 0, 0);
   return today;
 }
 

@@ -91,7 +91,12 @@ class TaskManager {
     taskNode.appendChild(taskPriorityImg);
 
     const dueDateNode = document.createElement('span');
-    dueDateNode.classList.add('badge', 'text-bg-light', 'fw-light');
+    dueDateNode.classList.add('badge', 'text-bg-light', 'fw-light', 'align-self-center');
+    if (task.dueDate.isToday() || task.dueDate.isInThePast()) {
+      dueDateNode.classList.add('text-danger');
+    } else if (task.dueDate.isInLessThanDays(7)) {
+      dueDateNode.classList.add('text-warning');
+    }
     dueDateNode.appendChild(document.createTextNode(task.dueDate.toISODateString()));
     taskNode.appendChild(dueDateNode);
 
@@ -136,7 +141,15 @@ class TaskManager {
     const tasksContainer = document.getElementById(this.taskContainerId);
     tasksContainer.innerHTML = '';
 
-    for (const task of this.tasks) {
+    const sortedTasks = this.tasks.toSorted((task1, task2) => {
+      if (task1.dueDate.isSameDay(task2.dueDate)) {
+        return task1.priority - task2.priority;
+      } else {
+        return task1.dueDate - task2.dueDate;
+      }
+    })
+
+    for (const task of sortedTasks) {
       if (!this.filterByPriority || this.filterByPriority === task.priority) {
         tasksContainer.appendChild(this.buildTaskHTML(task));
       }
