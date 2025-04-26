@@ -1,4 +1,11 @@
 
+function today() {
+  const today = new Date();
+  today.setHours(24, 0, 0, 0);
+  return today;
+}
+
+
 function getPriorityIconFromNumber(priority) {
   switch (priority) {
     case 1:

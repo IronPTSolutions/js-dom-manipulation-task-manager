@@ -10,13 +10,36 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/assets/plugins/air-datepicker/air-datepicker.css">
 
   <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
 
   <div class="container py-5">
-    <h2 class="fw-light">Task Manager</h2>
+    <div class="d-flex gap-2 mb-3">
+      <h2 class="fw-light me-auto mb-0">Task Manager</h2>
+      <div id="task-priority-filter" class="btn-group btn-group-sm align-self-center" role="group">
+        <button type="button" class="btn btn-outline-light" data-priority="all">
+          <span class="text-dark">ALL</span>
+        </button>
+        <button type="button" class="btn btn-outline-light" data-priority="1">
+          <img src="/assets/img/icons/priority/critical.svg" alt="P1" class="prado" />
+        </button>
+        <button type="button" class="btn btn-outline-light" data-priority="2">
+          <img src="/assets/img/icons/priority/high.svg" alt="P2" height="15" />
+        </button>
+        <button type="button" class="btn btn-outline-light" data-priority="3">
+          <img src="/assets/img/icons/priority/medium.svg" alt="P3" height="15" />
+        </button>
+        <button type="button" class="btn btn-outline-light" data-priority="4">
+          <img src="/assets/img/icons/priority/low.svg" alt="P4" height="15" />
+        </button>
+        <button type="button" class="btn btn-outline-light" data-priority="5">
+          <img src="/assets/img/icons/priority/minor.svg" alt="P5" height="15" />
+        </button>
+      </div>
+    </div>
 
     <form action="/" method="post" id="task-form" class="mb-2">
       <div class="input-group">
@@ -29,30 +52,32 @@
           <option value="5">Minor</option>
         </select>
         <input type="text" name="name" class="form-control" placeholder="Task name..." />
+        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+        <input type="text" name="dueDate" class="form-control" placeholder="Task due date..." />
         <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-plus"></i></button>
       </div>
     </form>
 
     <ul id="tasks-container" class="list-group">
-      <li class="list-group-item d-flex gap-2 align-items-baseline">
-        <img src="/assets/img/icons/priority/critical.svg" alt="P1" class="priority-icon">
+      <li class="list-group-item d-flex gap-2 align-items-center">
+        <img src="/assets/img/icons/priority/critical.svg" alt="P1" class="priority-icon" />
+        <span class="badge text-bg-light fw-lighter text-danger">2025-04-26</span>
         <div class="me-auto">First task</div>
         <div class="d-flex gap-2">
           <i class="fa fa-check text-secondary" role="button"></i>
           <i class="fa fa-trash-o text-danger" role="button"></i>
         </div>
       </li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
-      <li class="list-group-item">A fourth item</li>
-      <li class="list-group-item">And a fifth one</li>
     </ul>
 
   </div>
     
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <script src="/assets/plugins/air-datepicker/air-datepicker.js"></script>
   
+  <script src="/assets/js/extensions/date.js"></script>
+
   <script src="/assets/js/utils.js"></script>
   <script src="/assets/js/models/task-manager.js"></script>
   <script src="/assets/js/index.js"></script>

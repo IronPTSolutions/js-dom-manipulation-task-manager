@@ -12,3 +12,13 @@
   width: 100%;
   max-width: 115px;
 }
+
+#task-form [name="dueDate"] {
+  width: 100%;
+  max-width: 130px;
+}
+
+
+.prado {
+  height: 15px;
+}
