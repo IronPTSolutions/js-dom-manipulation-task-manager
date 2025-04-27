@@ -48,7 +48,8 @@ class TaskManager {
       name: task.name.trim(),
       priority: parseInt(task.priority),
       isCompleted: false,
-      dueDate: task.dueDate ? new Date(task.dueDate) : today()
+      dueDate: task.dueDate ? new Date(task.dueDate) : today(),
+      tags: task.tags || []
     });
   }
 
@@ -64,10 +65,21 @@ class TaskManager {
   }
 
   onTaskFormSubmit(event) {
+
+    function cleanTags(tags) {
+      return tags
+        .split(',')
+        .map((tag) => tag.trim().toLowerCase())
+        .filter((tag) => tag !== '')
+    }
+
     event.preventDefault();
     const taskForm = event.target;
     const task = Object.fromEntries(new FormData(taskForm).entries());
     if (task.name.trim()) {
+      if (task.tags) {
+        task.tags = cleanTags(task.tags);
+      }
       this.add(task);
       this.render();
       taskForm.reset();
@@ -107,6 +119,16 @@ class TaskManager {
     }
     taskNameNode.appendChild(document.createTextNode(task.name));
     taskNode.appendChild(taskNameNode);
+
+    const tagsNode = document.createElement('div');
+    tagsNode.classList.add('d-flex', 'align-self-center', 'gap-1');
+    task.tags.forEach((tag) => {
+      const tagNode = document.createElement('span');
+      tagNode.classList.add('badge', 'text-bg-info', 'fw-lighter');
+      tagNode.appendChild(document.createTextNode(tag));
+      tagsNode.appendChild(tagNode);
+    })
+    taskNode.appendChild(tagsNode);
 
     const taskActionsNode = document.createElement('div');
     taskActionsNode.classList.add('d-flex', 'gap-2');

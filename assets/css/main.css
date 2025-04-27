@@ -18,6 +18,11 @@
   max-width: 130px;
 }
 
+#task-form [name="tags"] {
+  width: 100%;
+  max-width: 180px;
+}
+
 
 .prado {
   height: 15px;

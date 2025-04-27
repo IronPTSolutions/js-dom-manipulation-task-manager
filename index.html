@@ -43,7 +43,7 @@
 
     <form action="/" method="post" id="task-form" class="mb-2">
       <div class="input-group">
-        <span class="input-group-text"><i class="fa fa-tag"></i></span>
+        <span class="input-group-text"><i class="fa fa-tasks"></i></span>
         <select name="priority" class="form-select">
           <option value="1">Critical</option>
           <option value="2">High</option>
@@ -52,6 +52,8 @@
           <option value="5">Minor</option>
         </select>
         <input type="text" name="name" class="form-control" placeholder="Task name..." />
+        <span class="input-group-text"><i class="fa fa-tags"></i></span>
+        <input type="text" name="tags" class="form-control" placeholder="Task tags..." />
         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
         <input type="text" name="dueDate" class="form-control" placeholder="Task due date..." />
         <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-plus"></i></button>
