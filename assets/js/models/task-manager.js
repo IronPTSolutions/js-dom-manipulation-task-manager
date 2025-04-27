@@ -1,11 +1,13 @@
 class TaskManager {
 
-  constructor(taskContainerId, taskFormId, taskPriorityFilterId) {
+  constructor(taskContainerId, taskFormId, taskPriorityFilterId, taskFinderId) {
     this.taskContainerId =  taskContainerId;
     this.taskFormId = taskFormId;
     this.taskPriorityFilterId = taskPriorityFilterId;
+    this.taskFinderId = taskFinderId;
     this.tasks = [];
     this.filterByPriority = undefined;
+    this.filterByName = undefined;
 
     document.getElementById(this.taskFormId)
       .addEventListener('submit', (event) => this.onTaskFormSubmit(event));
@@ -39,6 +41,12 @@ class TaskManager {
           this.render();
         });
       });
+
+    document.getElementById(this.taskFinderId)
+      .addEventListener('submit', (event) => this.onTaskFinderSubmit(event));
+    // Perform filter form submit clicking submit button on every text pulsation from search name input
+    document.querySelector(`#${this.taskFinderId} [name="name"]`)
+      .addEventListener('input', () => document.querySelector(`#${this.taskFinderId} [type="submit"]`).click());
   }
 
   // tasks: { name: 'Task name', priority: '1', dueDate?: '2025-04-26' }
@@ -66,7 +74,7 @@ class TaskManager {
 
   onTaskFormSubmit(event) {
 
-    function cleanTags(tags) {
+    function formatTagsInput(tags) {
       return tags
         .split(',')
         .map((tag) => tag.trim().toLowerCase())
@@ -78,7 +86,7 @@ class TaskManager {
     const task = Object.fromEntries(new FormData(taskForm).entries());
     if (task.name.trim()) {
       if (task.tags) {
-        task.tags = cleanTags(task.tags);
+        task.tags = formatTagsInput(task.tags);
       }
       this.add(task);
       this.render();
@@ -86,7 +94,21 @@ class TaskManager {
     }
   }
 
-  // <span class="badge text-bg-light fw-lighter text-danger">2025-04-26</span>
+  onTaskFinderSubmit(event) {
+    event.preventDefault();
+    const finderForm = event.target;
+    const finder = Object.fromEntries(new FormData(finderForm).entries());
+    if (finder.name) {
+      // Regex by name case insensitive, matching any slice of string
+      // this.filterByName = buy
+      // task.name = 'Buy groceries'
+      // regex match = true
+      this.filterByName = new RegExp(finder.name, 'i');
+    } else {
+      this.filterByName =  undefined;
+    }
+    this.render();
+  }
 
   buildTaskHTML(task) {
     const taskNode = document.createElement('li');
@@ -173,7 +195,9 @@ class TaskManager {
 
     for (const task of sortedTasks) {
       if (!this.filterByPriority || this.filterByPriority === task.priority) {
-        tasksContainer.appendChild(this.buildTaskHTML(task));
+        if (!this.filterByName || this.filterByName.test(task.name)) {
+          tasksContainer.appendChild(this.buildTaskHTML(task));
+        }
       }
     }
   }
